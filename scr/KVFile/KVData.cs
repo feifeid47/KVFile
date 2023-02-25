@@ -32,13 +32,13 @@ namespace Feif.IO
             set
             {
                 var type = value.GetType();
-                KeyTypeValue[key] = new TypeValue(type.FullName, JsonConvert.SerializeObject(value));
+                KeyTypeValue[key] = new TypeValue(type.ToString(), JsonConvert.SerializeObject(value));
             }
         }
 
         public bool TryGetValue<T>(string key, out T value)
         {
-            if (KeyTypeValue.TryGetValue(key, out var typeValue) && typeof(T).FullName == typeValue.Type)
+            if (KeyTypeValue.TryGetValue(key, out var typeValue) && typeof(T).ToString() == typeValue.Type)
             {
                 var type = Type.GetType(typeValue.Type);
                 value = (T)JsonConvert.DeserializeObject(typeValue.Value, type);
